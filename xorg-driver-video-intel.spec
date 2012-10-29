@@ -4,20 +4,20 @@
 
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.20.9
+Version:	2.20.12
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
-Release:	1
+Release:	2
 %endif
 License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	6aa7b041fcd8fc7c080d9ad21a295be6
+# Source0-md5:	6d9565de03c167d8f621315476c20c73
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	6aa7b041fcd8fc7c080d9ad21a295be6
+# Source0-md5:	6d9565de03c167d8f621315476c20c73
 %endif
 URL:		http://xorg.freedesktop.org/
 BuildRequires:	Mesa-libGL-devel
@@ -74,8 +74,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xorg/modules/*/*.la
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post	-p /usr/sbin/ldconfig
+%postun	-p /usr/sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
