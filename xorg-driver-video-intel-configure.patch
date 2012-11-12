@@ -1,0 +1,21 @@
+diff -aurN xf86-video-intel-2.20.13.orig/configure.ac xf86-video-intel-2.20.13/configure.ac
+--- xf86-video-intel-2.20.13.orig/configure.ac	2012-11-11 18:27:40.079991465 +0100
++++ xf86-video-intel-2.20.13/configure.ac	2012-11-11 18:35:40.756270989 +0100
+@@ -185,7 +185,6 @@
+ AC_MSG_RESULT([$UXA])
+ if test "x$UXA" != "xno"; then
+ 	AC_DEFINE(USE_UXA, 1, [Enable UXA support])
+-	PKG_CHECK_MODULES(DRMINTEL, [libdrm_intel >= 2.4.29])
+ fi
+ 
+ AC_MSG_CHECKING([whether to include GLAMOR support])
+@@ -332,7 +331,8 @@
+ XORG_DRIVER_CHECK_EXT(DPMSExtension, xextproto)
+ 
+ # Obtain compiler/linker options for the driver dependencies
+-PKG_CHECK_MODULES(DRM, [libdrm >= 2.4.24]) # libdrm_intel is checked separately
++PKG_CHECK_MODULES(DRM, [libdrm >= 2.4.24])
++PKG_CHECK_MODULES(DRMINTEL, [libdrm_intel >= 2.4.29])
+ PKG_CHECK_MODULES(DRI, [xf86driproto], , DRI=no)
+ PKG_CHECK_MODULES(DRI2, [dri2proto >= 2.6],, DRI2=no)
+ PKG_CHECK_MODULES(PCIACCESS, [pciaccess >= 0.10])
