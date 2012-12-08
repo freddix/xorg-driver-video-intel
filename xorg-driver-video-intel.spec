@@ -4,7 +4,7 @@
 
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.20.14
+Version:	2.20.15
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
@@ -14,10 +14,10 @@ License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	17c3bc16b0bacb7f438c8c0659bd5b42
+# Source0-md5:	12e2bc4609b54212bcf0318928eccaa3
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	17c3bc16b0bacb7f438c8c0659bd5b42
+# Source0-md5:	12e2bc4609b54212bcf0318928eccaa3
 %endif
 Patch0:		%{name}-configure.patch
 URL:		http://xorg.freedesktop.org/
