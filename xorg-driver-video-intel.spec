@@ -1,10 +1,8 @@
 %define		gitver	%{nil}
 
-%bcond_without	sna	# enable SNA acceleration architecture
-
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.20.15
+Version:	2.20.16
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
@@ -14,10 +12,10 @@ License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	12e2bc4609b54212bcf0318928eccaa3
+# Source0-md5:	bff3599b51e44c43c4213cb8d04fa13d
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	12e2bc4609b54212bcf0318928eccaa3
+# Source0-md5:	bff3599b51e44c43c4213cb8d04fa13d
 %endif
 Patch0:		%{name}-configure.patch
 URL:		http://xorg.freedesktop.org/
@@ -55,13 +53,10 @@ X.org video driver for Intel integrated graphics chipsets.
 %{__autoheader}
 %{__automake}
 %configure \
-%if %{with sna}
-	--enable-kms-only	\
-	--enable-sna		\
-	--enable-uxa=no		\
-%endif
 	--disable-silent-rules	\
-	--disable-static
+	--disable-static	\
+	--enable-kms-only	\
+	--enable-sna
 %{__make}
 
 %install
