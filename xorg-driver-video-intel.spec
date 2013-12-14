@@ -6,7 +6,7 @@ Version:	2.99.906
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
-Release:	1
+Release:	2
 %endif
 License:	MIT
 Group:		X11/Applications
