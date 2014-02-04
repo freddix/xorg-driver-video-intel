@@ -1,8 +1,8 @@
-%define		gitver	%{nil}
+%define		gitver	fc001615ff78df4dab6ee0d5dd966b723326c358
 
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.99.907
+Version:	2.99.9010
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
@@ -12,10 +12,10 @@ License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	1e7011af0c2ec4103229b6cccd6e79a5
+# Source0-md5:	5819ee1c1a286f85007972ed118ff384
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	1e7011af0c2ec4103229b6cccd6e79a5
+# Source0-md5:	5819ee1c1a286f85007972ed118ff384
 %endif
 URL:		http://xorg.freedesktop.org/
 BuildRequires:	Mesa-libGL-devel
@@ -64,8 +64,18 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.{la,so}
-rm -f $RPM_BUILD_ROOT%{_libdir}/xorg/modules/*/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.{la,so}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/xorg/modules/*/*.la
+
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/X11/xorg.conf.d
+cat > $RPM_BUILD_ROOT%{_sysconfdir}/X11/xorg.conf.d/20-intel.conf <<EOF
+Section "Device"
+    Identifier	"Intel Graphics"
+    Driver	"intel"
+    Option	"AccelMethod"	"sna"
+    #Option	"AccelMethod"	"uxa"
+EndSection
+EOF
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -80,6 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/lib*.so.?
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %attr(755,root,root) %{_libdir}/xorg/modules/drivers/*.so
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/xorg.conf.d/20-intel.conf
 %{_mandir}/man4/intel.4*
 %{_mandir}/man4/intel-virtual-output.4*
 
