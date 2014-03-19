@@ -2,7 +2,7 @@
 
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.99.910
+Version:	2.99.911
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
@@ -12,10 +12,10 @@ License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	a9a5c2c15766c06a024381efe0d724bb
+# Source0-md5:	6130343b314e6a43be4bc02461d09fa7
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	a9a5c2c15766c06a024381efe0d724bb
+# Source0-md5:	6130343b314e6a43be4bc02461d09fa7
 %endif
 URL:		http://xorg.freedesktop.org/
 BuildRequires:	Mesa-libGL-devel
@@ -34,8 +34,19 @@ Provides:	xorg-driver-video
 Requires:	xorg-xserver-server
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_libexecdir	%{_libdir}/xf86-video-intel
+
 %description
 X.org video driver for Intel integrated graphics chipsets.
+
+%package backlight-helper
+Summary:    Backlight helper forIntel integrated graphics chipsets
+Group:	    X11/Applications
+Requires:   %{name} = %{version}-%{release}
+Requires:   polkit
+
+%description backlight-helper
+Utility to modify LCD panel brightness.
 
 %prep
 %if "%{gitver}" != "%{nil}"
@@ -93,4 +104,10 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/xorg.conf.d/20-video-intel.conf
 %{_mandir}/man4/intel.4*
 %{_mandir}/man4/intel-virtual-output.4*
+
+%files backlight-helper
+%defattr(644,root,root,755)
+%dir %{_libexecdir}
+%attr(755,root,root) %{_libexecdir}/xf86-video-intel-backlight-helper
+%{_datadir}/polkit-1/actions/org.x.xf86-video-intel.backlight-helper.policy
 
