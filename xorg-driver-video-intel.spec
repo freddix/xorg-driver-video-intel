@@ -2,7 +2,7 @@
 
 Summary:	X.org video driver for Intel integrated graphics chipsets
 Name:		xorg-driver-video-intel
-Version:	2.99.916
+Version:	2.99.917
 %if "%{gitver}" != "%{nil}"
 Release:	0.%{gitver}.1
 %else
@@ -12,12 +12,11 @@ License:	MIT
 Group:		X11/Applications
 %if "%{gitver}" != "%{nil}"
 Source0:	http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/xf86-video-intel-%{gitver}.tar.gz
-# Source0-md5:	7e24551eae0b952f4d795e791e88ebe5
+# Source0-md5:	fa196a66e52c0c624fe5d350af7a5e7b
 %else
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-%{version}.tar.bz2
-# Source0-md5:	7e24551eae0b952f4d795e791e88ebe5
+# Source0-md5:	fa196a66e52c0c624fe5d350af7a5e7b
 %endif
-Patch0:		0001-sna-Use-default-monitor-options-on-the-first-output.patch
 URL:		http://xorg.freedesktop.org/
 BuildRequires:	Mesa-libGL-devel
 BuildRequires:	autoconf
@@ -55,7 +54,6 @@ Utility to modify LCD panel brightness.
 %else
 %setup -qn xf86-video-intel-%{version}
 %endif
-%patch0 -p1
 
 %build
 %{__libtoolize}
